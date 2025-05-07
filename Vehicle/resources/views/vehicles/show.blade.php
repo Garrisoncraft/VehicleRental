@@ -56,6 +56,7 @@
                         </div>
                     </div>
                     
+                    @if(auth()->user() && auth()->user()->isAdmin())
                     <div class="mt-4 d-flex justify-content-between">
                         <a href="{{ route('vehicles.edit', $vehicle->id) }}" 
                            class="btn btn-primary" 
@@ -73,6 +74,7 @@
                             </button>
                         </form>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

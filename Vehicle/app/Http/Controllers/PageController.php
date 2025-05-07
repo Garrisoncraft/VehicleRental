@@ -20,10 +20,14 @@ class PageController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Here you can handle the contact form submission, e.g., send email or save to database
-        // For simplicity, we'll just flash a success message
+        $emailContent = "Name: " . $request->input('name') . "\n" .
+                        "Email: " . $request->input('email') . "\n" .
+                        "Message: " . $request->input('message');
 
-        // Example: Mail::to('admin@example.com')->send(new ContactFormMail($request->all()));
+        Mail::raw($emailContent, function ($message) use ($request) {
+            $message->to('garrisonsayor@gmail.com')
+                    ->subject('New Contact Form Submission');
+        });
 
         return redirect()->route('home_page')->with('success', 'Thank you for contacting us! We will get back to you soon.');
     }

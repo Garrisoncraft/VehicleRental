@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class VehicleController extends Controller
 {
@@ -16,6 +17,12 @@ class VehicleController extends Controller
 
     public function create()
     {
+        Log::info('Create vehicle accessed', [
+            'user_id' => auth()->id(),
+            'is_admin' => auth()->user() ? auth()->user()->isAdmin() : null,
+            'user' => auth()->user(),
+        ]);
+
         // Authorization check: only admin can access create vehicle form
         if (!auth()->user()->isAdmin()) {
             abort(403, 'Unauthorized action.');
